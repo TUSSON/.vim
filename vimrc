@@ -4,8 +4,8 @@ syntax on
 filetype plugin indent on
 
 "window always display status line
-set laststatus=2
-set statusline=%F\ %r\ %m%*%=%l/%L\ %c\ %p%%
+"set laststatus=1
+"set statusline=%F\ %r\ %m%*%=%l/%L\ %c\ %p%%
 
 "in order to switch between buffers with unsaved change
 set hidden
