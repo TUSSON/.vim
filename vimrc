@@ -108,15 +108,25 @@ if has("cscope")
     call AutoLoadCTagsAndCScope()
     set csverb
 
-    "find symbol
+    "symbol: find all references to the token under cursor
     nmap <C-@>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-    "find tag/define
+    nmap <C-@>vs :vert scs find s <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-@>hs :scs find s <C-R>=expand("<cword>")<CR><CR>
+    "global: find global definition(s) of the token under cursor
     nmap <C-@>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-    "find who call this fun
+    nmap <C-@>vg :vert scs find g <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-@>hg :scs find g <C-R>=expand("<cword>")<CR><CR>
+    "calls:  find all calls to the function name under cursor
     nmap <C-@>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-    "find egrep mode
+    nmap <C-@>vc :vert scs find c <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-@>hc :scs find c <C-R>=expand("<cword>")<CR><CR>
+    "egrep:  egrep search for the word under cursor
     nmap <C-@>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-    "find which fun call by this fun
+    nmap <C-@>ve :vert scs find e <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-@>he :scs find e <C-R>=expand("<cword>")<CR><CR>
+    "called: find functions that function under cursor calls
     nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-@>vd :vert scs find d <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-@>hd :scs find d <C-R>=expand("<cword>")<CR><CR>
 endif
 
