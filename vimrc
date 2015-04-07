@@ -48,8 +48,8 @@ set expandtab
 set nocompatible
 
 "auto find tags
-set tags=tags;
-set autochdir
+"set tags=tags;
+"set autochdir
 
 "serarch: smartcase
 set ignorecase smartcase
@@ -75,3 +75,48 @@ set foldcolumn=0
 set foldminlines=3
 set foldlevel=4
 nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' :'zo')<CR>
+
+"auto load tags and cscope database
+function! AutoLoadCTagsAndCScope()
+    let max = 5
+    let dir = './'
+    let i = 0
+    let break = 0
+    while isdirectory(dir) && i < max
+        if filereadable(dir . 'cscope.out')
+            execute 'cs add ' . dir . 'cscope.out'
+            let break = 1
+        endif
+        if filereadable(dir . 'tags')
+           execute 'set tags =' . dir . 'tags'
+           let break = 1
+        endif
+        if break == 1
+            execute 'lcd ' . dir
+            break
+        endif
+        let dir = dir . '../'
+        let i = i + 1
+    endwhile
+endf
+
+"cscope
+if has("cscope")
+    set csto=1
+    set cst
+    set nocsverb
+    call AutoLoadCTagsAndCScope()
+    set csverb
+
+    "find symbol
+    nmap <C-@>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+    "find tag/define
+    nmap <C-@>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+    "find who call this fun
+    nmap <C-@>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+    "find egrep mode
+    nmap <C-@>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+    "find which fun call by this fun
+    nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+endif
+
