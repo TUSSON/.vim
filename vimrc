@@ -132,3 +132,8 @@ if has("cscope")
     nmap <C-@>hd :scs find d <C-R>=expand("<cword>")<CR><CR>
 endif
 
+if &diff
+    set background=dark
+    colorscheme solarized
+endif
+
