@@ -64,6 +64,7 @@ set hlsearch
 
 "taglist:
 let Tlist_Show_One_File = 1
+let Tlist_Process_File_Always = 1
 let Tlist_Exit_OnlyWindow = 1
 let Tlist_Use_Right_Window = 1
 let Tlist_GainFocus_On_ToggleOpen = 1
@@ -138,5 +139,7 @@ endif
 "endif
 
 "quick jump to current function name
-nmap <silent> <C-@>f [[?(<CR>b:noh<CR>
+nmap <silent> <C-p> ?<C-R>=escape(Tlist_Get_Tag_Prototype_By_Line(expand("%"), eval(line(".")-1)), '[]*')<CR><CR>/<C-R>=expand(Tlist_Get_Tagname_By_Line())<CR><CR>:noh<CR>
+
+nmap <silent> <C-n> :TlistToggle<CR>j<CR>/<C-R>=expand(Tlist_Get_Tagname_By_Line())<CR><CR>:noh<CR>
 
