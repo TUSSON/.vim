@@ -139,7 +139,7 @@ endif
 "endif
 
 "quick jump to current function name
-nmap <silent> <C-p> ?<C-R>=escape(Tlist_Get_Tag_Prototype_By_Line(expand("%"), eval(line(".")-1)), '[]*')<CR><CR>/<C-R>=expand(Tlist_Get_Tagname_By_Line())<CR><CR>:noh<CR>
+nmap <silent> <C-p> ?<C-R>=escape(Tlist_Get_Tag_Prototype_By_Line(expand("%"), eval(line(".")-1)), '[]*')<CR><CR>/<C-R>=expand(Tlist_Get_Tagname_By_Line())<CR><CR>:noh<CR>:call histdel("search", -1)<CR>:let @/ = histget("search", -1)<CR>
 
-nmap <silent> <C-n> :TlistToggle<CR>j<CR>/<C-R>=expand(Tlist_Get_Tagname_By_Line())<CR><CR>:noh<CR>
+nmap <silent> <C-n> :TlistToggle<CR>j<CR>/<C-R>=expand(Tlist_Get_Tagname_By_Line())<CR><CR>:noh<CR>:call histdel("search", -1)<CR>:let @/ = histget("search", -1)<CR>
 
