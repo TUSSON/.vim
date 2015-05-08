@@ -69,6 +69,7 @@ let Tlist_Exit_OnlyWindow = 1
 let Tlist_Use_Right_Window = 1
 let Tlist_GainFocus_On_ToggleOpen = 1
 let Tlist_Close_On_Select = 1
+let Tlist_Display_Tag_Scope = 0
 map <silent> tl :TlistToggle<cr>
 
 "auto fold
@@ -139,7 +140,7 @@ endif
 "endif
 
 "quick jump to current function name
-nmap <silent> <C-p> ?<C-R>=escape(Tlist_Get_Tag_Prototype_By_Line(expand("%"), eval(line(".")-1)), '[]*')<CR><CR>/<C-R>=expand(Tlist_Get_Tagname_By_Line())<CR><CR>:noh<CR>:call histdel("search", -1)<CR>:let @/ = histget("search", -1)<CR>
+nmap <silent> <C-p> ?<C-R>=escape(Tlist_Get_Tag_Prototype_By_Line(expand("%"), eval(line(".")-1)), '[]*')<CR><CR>b/<C-R>=expand(Tlist_Get_Tagname_By_Line(expand("%"), eval(line(".")+2)))<CR><CR>:noh<CR>:call histdel("search", -1)<CR>:let @/ = histget("search", -1)<CR>
 
-nmap <silent> <C-n> :TlistToggle<CR>j<CR>/<C-R>=expand(Tlist_Get_Tagname_By_Line())<CR><CR>:noh<CR>:call histdel("search", -1)<CR>:let @/ = histget("search", -1)<CR>
+nmap <silent> <C-n> :TlistToggle<CR>j<CR>b/<C-R>=expand(Tlist_Get_Tagname_By_Line(expand("%"), eval(line(".")+2)))<CR><CR>:noh<CR>:call histdel("search", -1)<CR>:let @/ = histget("search", -1)<CR>
 
