@@ -3,11 +3,31 @@ set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
 "pathogen: vim plugin manage
 call pathogen#infect()
 syntax on
-filetype plugin indent on
+filetype indent on
 
 "window always display status line
 "set laststatus=1
 "set statusline=%F\ %r\ %m%*%=%l/%L\ %c\ %p%%
+
+let mapleader = ","
+let g:mapleader = ","
+
+" Fast saving
+nmap <leader>w :w!<cr>
+
+"show tab as ^I and end of line as $
+nmap <silent> <leader>ls :set list<cr>
+nmap <silent> <leader>nls : set nolist<cr>
+" Show line number
+nmap <silent> <leader>nu : set nu<cr>
+nmap <silent> <leader>nnu : set nonu<cr>
+
+" Disable highlight when <leader><cr> is pressed
+map <silent> <leader><cr> :noh<cr>
+
+" :W sudo saves the file
+" (useful for handling the permission-denied error)
+command W w !sudo tee % > /dev/null
 
 "in order to switch between buffers with unsaved change
 set hidden
@@ -16,8 +36,23 @@ map <tab> :bn<cr>
 "s-tab - buffer prev
 map <s-tab> :bp<cr>
 
+map <silent> <C-h> :tabp<cr>
+map <silent> <C-l> :tabn<cr>
+map <silent> <C-j> :tabm -1<cr>
+map <silent> <C-k> :tabm +1<cr>
+map <silent> <leader>tn :tabnew<cr>
+map <silent> <leader>to :tabonly<cr>
+map <silent> <leader>tc :tabclose<cr>
+
 "ctrlp: file, buffer ... finder
 let g:ctrlp_map = ',,'
+let g:ctrlp_by_filename = 1
+"let g:ctrlp_switch_buffer = 'Et'
+"let g:ctrlp_tabpage_position = 'ac'
+let g:ctrlp_use_caching = 1
+let g:ctrlp_clear_cache_on_exit = 0
+let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
+
 let g:ctrlp_open_multiple_files = 'v'
 let g:ctrlp_max_files = 0
 let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
@@ -45,6 +80,7 @@ set cindent
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
+set smarttab
 set expandtab
 
 set nocompatible
@@ -133,6 +169,7 @@ if has("cscope")
     nmap <C-@>vd :vert scs find d <C-R>=expand("<cword>")<CR><CR>
     nmap <C-@>hd :scs find d <C-R>=expand("<cword>")<CR><CR>
 endif
+
 
 "if &diff
     set background=dark
