@@ -14,6 +14,10 @@ let g:mapleader = ","
 
 " Fast saving
 nmap <leader>w :w!<cr>
+nmap <leader>wq :wq<cr>
+
+nmap <leader>qq :q!<cr>
+nmap <leader>qa :qa!<cr>
 
 "show tab as ^I and end of line as $
 nmap <silent> <leader>ls :set list<cr>
@@ -32,12 +36,12 @@ command W w !sudo tee % > /dev/null
 "in order to switch between buffers with unsaved change
 set hidden
 "tab   - buffer next
-map <tab> :bn<cr>
+"map <tab> :bn<cr>
 "s-tab - buffer prev
-map <s-tab> :bp<cr>
+"map <s-tab> :bp<cr>
 
-map <silent> <C-h> :tabp<cr>
-map <silent> <C-l> :tabn<cr>
+map <silent> <s-tab> :tabp<cr>
+map <silent> <tab> :tabn<cr>
 map <silent> <C-j> :tabm -1<cr>
 map <silent> <C-k> :tabm +1<cr>
 map <silent> <leader>tn :tabnew<cr>
