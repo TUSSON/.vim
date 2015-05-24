@@ -19,15 +19,9 @@ nmap <leader>wq :wq<cr>
 nmap <leader>qq :q!<cr>
 nmap <leader>qa :qa!<cr>
 
-"show tab as ^I and end of line as $
-nmap <silent> <leader>ls :set list<cr>
-nmap <silent> <leader>nls : set nolist<cr>
-" Show line number
-nmap <silent> <leader>nu : set nu<cr>
-nmap <silent> <leader>nnu : set nonu<cr>
-
-" Disable highlight when <leader><cr> is pressed
-map <silent> <leader><cr> :noh<cr>
+nmap <silent> <leader>ls :set list !<cr>
+nmap <silent> <leader>ls :set nu !<cr>
+nmap <silent> <leader><cr> :noh<cr>
 
 " :W sudo saves the file
 " (useful for handling the permission-denied error)
@@ -40,8 +34,8 @@ set hidden
 "s-tab - buffer prev
 "map <s-tab> :bp<cr>
 
-map <silent> <s-tab> :tabp<cr>
-map <silent> <tab> :tabn<cr>
+map <silent> <C-h> :tabp<cr>
+map <silent> <C-l> :tabn<cr>
 map <silent> <C-j> :tabm -1<cr>
 map <silent> <C-k> :tabm +1<cr>
 map <silent> <leader>tn :tabnew<cr>
