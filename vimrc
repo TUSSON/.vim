@@ -20,7 +20,7 @@ nmap <leader>qq :q!<cr>
 nmap <leader>qa :qa!<cr>
 
 nmap <silent> <leader>ls :set list !<cr>
-nmap <silent> <leader>ls :set nu !<cr>
+nmap <silent> <leader>ln :set nu !<cr>
 nmap <silent> <leader><cr> :noh<cr>
 
 " :W sudo saves the file
@@ -41,6 +41,9 @@ map <silent> <C-k> :tabm +1<cr>
 map <silent> <leader>tn :tabnew<cr>
 map <silent> <leader>to :tabonly<cr>
 map <silent> <leader>tc :tabclose<cr>
+map <silent> <leader>tt <C-O>:tabnew #<cr>
+map <silent> <leader>th <C-O>:sp #<cr>
+map <silent> <leader>tv <C-O>:vsp #<cr>
 
 "ctrlp: file, buffer ... finder
 let g:ctrlp_map = ',,'
@@ -114,60 +117,13 @@ set foldminlines=3
 set foldlevel=4
 nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' :'zo')<CR>
 
-"auto load tags and cscope database
-function! AutoLoadCTagsAndCScope()
-    let max = 5
-    let dir = './'
-    let i = 0
-    let break = 0
-    while isdirectory(dir) && i < max
-        if filereadable(dir . 'cscope.out')
-            execute 'cs add ' . dir . 'cscope.out'
-            let break = 1
-        endif
-        if filereadable(dir . 'tags')
-           execute 'set tags =' . dir . 'tags'
-           let break = 1
-        endif
-        if break == 1
-            execute 'lcd ' . dir
-            break
-        endif
-        let dir = dir . '../'
-        let i = i + 1
-    endwhile
-endf
-
-"cscope
-if has("cscope")
-    set csto=1
-    set cst
-    set nocsverb
-    call AutoLoadCTagsAndCScope()
-    set csverb
-
-    "symbol: find all references to the token under cursor
-    nmap <C-@>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-@>vs :vert scs find s <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-@>hs :scs find s <C-R>=expand("<cword>")<CR><CR>
-    "global: find global definition(s) of the token under cursor
-    nmap <C-@>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-@>vg :vert scs find g <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-@>hg :scs find g <C-R>=expand("<cword>")<CR><CR>
-    "calls:  find all calls to the function name under cursor
-    nmap <C-@>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-@>vc :vert scs find c <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-@>hc :scs find c <C-R>=expand("<cword>")<CR><CR>
-    "egrep:  egrep search for the word under cursor
-    nmap <C-@>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-@>ve :vert scs find e <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-@>he :scs find e <C-R>=expand("<cword>")<CR><CR>
-    "called: find functions that function under cursor calls
-    nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-@>vd :vert scs find d <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-@>hd :scs find d <C-R>=expand("<cword>")<CR><CR>
-endif
-
+"symbol: find all references to the token under cursor
+nmap <C-@>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@>i :cs find i <C-R>=expand("<cfile>")<CR><CR>
+nmap <C-@>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
 
 "if &diff
     set background=dark
