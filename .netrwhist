@@ -1,6 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =4
-let g:netrw_dirhist_1='/home/dusong/work/project/qmss11-8916/LINUX/android/kernel/arch/arm/boot/dts/qcom/fa1601'
-let g:netrw_dirhist_2='/home/dusong/work/project/qmss11-8926/LINUX/android/kernel/arch/arm/boot/dts/fa2610'
-let g:netrw_dirhist_3='/home/dusong/work/project/qmss11-8909/LINUX/android/vendor/qcom/proprietary/qcril/qcril_qmi'
-let g:netrw_dirhist_4='/home/dusong/work/myRepo/shell/work_script'
