@@ -41,9 +41,6 @@ map <silent> <C-k> :tabm +1<cr>
 map <silent> <leader>tn :tabnew<cr>
 map <silent> <leader>to :tabonly<cr>
 map <silent> <leader>tc :tabclose<cr>
-map <silent> <leader>tt <C-O>:tabnew #<cr>
-map <silent> <leader>th <C-O>:sp #<cr>
-map <silent> <leader>tv <C-O>:vsp #<cr>
 
 "ctrlp: file, buffer ... finder
 let g:ctrlp_map = ',,'
@@ -107,7 +104,11 @@ let Tlist_Use_Right_Window = 1
 let Tlist_GainFocus_On_ToggleOpen = 1
 let Tlist_Close_On_Select = 1
 let Tlist_Display_Tag_Scope = 0
+
 map <silent> tl :TlistToggle<cr>
+map <silent> tt <C-O>:tabnew #<cr>
+map <silent> th <C-O>:sp #<cr>
+map <silent> tv <C-O>:vsp #<cr>
 
 "auto fold
 set foldenable
@@ -115,7 +116,7 @@ set foldmethod=syntax
 set foldcolumn=0
 set foldminlines=3
 set foldlevel=4
-nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' :'zo')<CR>
+nnoremap <silent> <space> @=((foldclosed(line('.')) < 0) ? 'zc' :'zo')<CR>
 
 "symbol: find all references to the token under cursor
 nmap <C-@>s :cs find s <C-R>=expand("<cword>")<CR><CR>
@@ -135,3 +136,4 @@ nmap <silent> <C-p> ?<C-R>=escape(Tlist_Get_Tag_Prototype_By_Line(expand("%"), e
 
 nmap <silent> <C-n> :TlistToggle<CR>j<CR>b/<C-R>=expand(Tlist_Get_Tagname_By_Line(expand("%"), eval(line(".")+2)))<CR><CR>:noh<CR>:call histdel("search", -1)<CR>:let @/ = histget("search", -1)<CR>
 
+nmap <leader>f :TlistShowPrototype<CR>
