@@ -36,9 +36,7 @@ set hidden
 "map <s-tab> :bp<cr>
 
 map <silent> <C-p> :tabp<cr>
-imap <silent> <C-p> <Esc>:tabp<cr>
 map <silent> <C-n> :tabn<cr>
-imap <silent> <C-n> <Esc>:tabn<cr>
 map <silent> tp :tabm -1<cr>
 map <silent> tn :tabm +1<cr>
 map <silent> <leader>tn :tabnew<cr>
@@ -50,7 +48,7 @@ inoremap <c-h> <left>
 inoremap <c-l> <right>
 inoremap <c-j> <c-o>gj
 inoremap <c-k> <c-o>gk
-"inoremap <C-u> <esc>gUiwea
+inoremap <C-r>u <esc>gUiwea
 inoremap <C-r>p <c-r>"
 
 "ctrlp: file, buffer ... finder
