@@ -35,10 +35,10 @@ set hidden
 "s-tab - buffer prev
 "map <s-tab> :bp<cr>
 
-map <silent> <C-p> :tabp<cr>
-map <silent> <C-n> :tabn<cr>
-map <silent> tp :tabm -1<cr>
-map <silent> tn :tabm +1<cr>
+map <silent> <C-h> :tabp<cr>
+map <silent> <C-l> :tabn<cr>
+map <silent> <C-j> :tabm -1<cr>
+map <silent> <C-k> :tabm +1<cr>
 map <silent> <leader>tn :tabnew<cr>
 map <silent> <leader>to :tabonly<cr>
 map <silent> <leader>tc :tabclose<cr>
@@ -145,3 +145,4 @@ nmap <C-@>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
 
 nmap <silent> <leader>f :call searchdecl('<C-R>=expand(Tlist_Get_Tagname_By_Line(expand("%"), eval(line(".")-1)))<CR>')<CR>
 nmap <leader>g :TlistShowPrototype<CR>
+
