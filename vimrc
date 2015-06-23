@@ -13,7 +13,7 @@ let mapleader = ","
 let g:mapleader = ","
 
 " Fast saving
-nmap <leader>w :w!<cr>
+nmap <leader>ww :w!<cr>
 nmap <leader>wq :wq<cr>
 
 nmap <leader>qq :q!<cr>
@@ -23,6 +23,7 @@ nmap <silent> <leader>ls :set list !<cr>
 nmap <silent> <leader>ln :set nu !<cr>
 nmap <silent> <leader><cr> :noh<cr>
 
+set nu
 " :W sudo saves the file
 " (useful for handling the permission-denied error)
 command W w !sudo tee % > /dev/null
@@ -41,6 +42,14 @@ map <silent> <C-k> :tabm +1<cr>
 map <silent> <leader>tn :tabnew<cr>
 map <silent> <leader>to :tabonly<cr>
 map <silent> <leader>tc :tabclose<cr>
+
+" move in insert mode
+inoremap <c-h> <left>
+inoremap <c-l> <right>
+inoremap <c-j> <c-o>gj
+inoremap <c-k> <c-o>gk
+inoremap <C-r>u <esc>gUiwea
+inoremap <C-r>p <c-r>"
 
 "ctrlp: file, buffer ... finder
 let g:ctrlp_map = ',,'
@@ -80,7 +89,7 @@ set softtabstop=4
 set shiftwidth=4
 set smarttab
 set expandtab
-
+set cursorline
 set nocompatible
 
 "auto find tags
@@ -132,8 +141,8 @@ nmap <C-@>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
 "endif
 
 "quick jump to current function name
-nmap <silent> <C-p> ?<C-R>=escape(Tlist_Get_Tag_Prototype_By_Line(expand("%"), eval(line(".")-1)), '[]*')<CR><CR>b/<C-R>=expand(Tlist_Get_Tagname_By_Line(expand("%"), eval(line(".")+2)))<CR><CR>:noh<CR>:call histdel("search", -1)<CR>:let @/ = histget("search", -1)<CR>
+"nmap <silent> <leader>f ?<C-R>=escape(Tlist_Get_Tag_Prototype_By_Line(expand("%"), eval(line(".")-1)), '[]*')<CR><CR>b:keepjumps exe '/<C-R>=expand(Tlist_Get_Tagname_By_Line(expand("%"), eval(line(".")+2)))<CR>'<CR>:keepjumps normal n<CR>:noh<CR>:call histdel("search", -1)<CR>:let @/ = histget("search", -1)<CR>
 
-nmap <silent> <C-n> :TlistToggle<CR>j<CR>b/<C-R>=expand(Tlist_Get_Tagname_By_Line(expand("%"), eval(line(".")+2)))<CR><CR>:noh<CR>:call histdel("search", -1)<CR>:let @/ = histget("search", -1)<CR>
+nmap <silent> <leader>f :call searchdecl('<C-R>=expand(Tlist_Get_Tagname_By_Line(expand("%"), eval(line(".")-1)))<CR>')<CR>
+nmap <leader>g :TlistShowPrototype<CR>
 
-nmap <leader>f :TlistShowPrototype<CR>
