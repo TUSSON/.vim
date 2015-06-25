@@ -102,8 +102,8 @@ endif
 if !hasmapto('<Plug>MarkRegex', 'v')
 	vmap <unique> <silent> <leader>r <Plug>MarkRegex
 endif
-if !hasmapto('<Plug>MarkClear', 'n')
-	nmap <unique> <silent> <leader>n <Plug>MarkClear
+if !hasmapto('<Plug>MarkClear', 'c')
+	nmap <unique> <silent> <leader>c <Plug>MarkClear
 endif
 
 nnoremap <silent> <Plug>MarkSet   :call
@@ -115,7 +115,7 @@ nnoremap <silent> <Plug>MarkRegex :call
 vnoremap <silent> <Plug>MarkRegex <c-\><c-n>:call
 	\ <sid>MarkRegex(<sid>GetVisualSelectionEscaped("N"))<cr>
 nnoremap <silent> <Plug>MarkClear :call
-	\ <sid>DoMark(<sid>CurrentMark())<cr>
+	\ <sid>DoMark()<cr>
 
 " Here is a sumerization of the following keys' behaviors:
 " 
@@ -140,8 +140,8 @@ nnoremap <silent> <Plug>MarkClear :call
 
 nnoremap <silent> <leader>* :call <sid>SearchCurrentMark()<cr>
 nnoremap <silent> <leader># :call <sid>SearchCurrentMark("b")<cr>
-nnoremap <silent> <leader>/ :call <sid>SearchAnyMark()<cr>
-nnoremap <silent> <leader>? :call <sid>SearchAnyMark("b")<cr>
+nnoremap <silent> <leader>n :call <sid>SearchAnyMark()<cr>
+nnoremap <silent> <leader>N :call <sid>SearchAnyMark("b")<cr>
 nnoremap <silent> * :if !<sid>SearchNext()<bar>execute "norm! *"<bar>endif<cr>
 nnoremap <silent> # :if !<sid>SearchNext("b")<bar>execute "norm! #"<bar>endif<cr>
 
@@ -270,6 +270,25 @@ function! s:DoMark(...) " DoMark(regexp)
 		let g:mwLastSearched = ""
 		return 0
 	endif
+
+  let i = 0
+  let regexp_case = ""
+  while i < strlen(regexp)
+    if char2nr(regexp[i]) >= char2nr('A') && char2nr(regexp[i]) <= char2nr('Z')
+      let regexp_case = ""
+      break
+    endif
+    if char2nr(regexp[i]) >= char2nr('a') && char2nr(regexp[i]) <= char2nr('z')
+      let regexp_case = regexp_case . '[' . toupper(regexp[i]) . regexp[i] . ']'
+    else
+      let regexp_case = regexp_case . regexp[i]
+    endif
+    let i = i + 1
+  endwhile
+
+  if regexp_case != ""
+    let regexp = regexp_case
+  endif
 
 	" clear the mark if it has been marked
 	let i = 1
