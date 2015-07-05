@@ -1,0 +1,6 @@
+.gitattributes export-ignore
+.gitignore     export-ignore
+*.png          export-ignore
+README.md      export-ignore
+doc/tags       export-ignore
+zip            export-ignore

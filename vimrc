@@ -2,7 +2,6 @@ set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
 
 "pathogen: vim plugin manage
 call pathogen#infect()
-syntax on
 filetype indent on
 
 "window always display status line
@@ -21,9 +20,10 @@ nmap <leader>qa :qa!<cr>
 
 nmap <silent> <leader>ls :set list !<cr>
 nmap <silent> <leader>ln :set nu !<cr>
+nmap <silent> <leader>co :set cursorcolumn !<cr>
 nmap <silent> <leader><cr> :noh<cr>
 
-set nu
+"set nu
 " :W sudo saves the file
 " (useful for handling the permission-denied error)
 command W w !sudo tee % > /dev/null
@@ -79,7 +79,7 @@ set autowrite
 
 "syntax highlight
 syntax enable
-set syntax=on
+syntax on
 
 "tab
 set autoindent
@@ -145,4 +145,42 @@ nmap <C-@>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
 
 nmap <silent> <leader>f :call searchdecl('<C-R>=expand(Tlist_Get_Tagname_By_Line(expand("%"), eval(line(".")-1)))<CR>', 0, 1)<CR>
 nmap <leader>g :TlistShowPrototype<CR>
+
+" Always show the status line
+set laststatus=2
+set statusline=%P\ \ %-10.(%l,%c%V%)%<%f\ %h%m%r\ -%L-
+
+hi StatusLine term=reverse ctermfg=0 ctermbg=14
+hi StatusLineNC term=reverse ctermfg=0 ctermbg=10
+hi VertSplit  term=reverse ctermfg=8 ctermbg=0
+hi Visual     term=reverse ctermfg=3 ctermbg=8
+
+hi TabLine    term=reverse ctermfg=10 ctermbg=0
+hi TabLineSel term=reverse ctermfg=0 ctermbg=14
+hi TabLineFill term=reverse ctermfg=0 ctermbg=0
+
+" Not to enable plugin by default
+let g:scroll_position_auto_enable = 0
+
+if g:scroll_position_auto_enable
+    " Default markers
+    let g:scroll_position_marker         = '▕'
+    let g:scroll_position_visual_begin   = '⇜'
+    let g:scroll_position_visual_middle  = '↭'
+    let g:scroll_position_visual_end     = '⇝'
+    let g:scroll_position_visual_overlap = '↭'
+
+    " Additional markers disabled by default due to slow rendering
+    "let g:scroll_position_jump = '-'
+    "let g:scroll_position_change = 'x'
+
+    hi SignColumn                  ctermfg=8   ctermbg=0
+    hi ScrollPositionMarker        ctermfg=208 ctermbg=0
+    hi ScrollPositionVisualBegin   ctermfg=136 ctermbg=0
+    hi ScrollPositionVisualMiddle  ctermfg=136 ctermbg=0
+    hi ScrollPositionVisualEnd     ctermfg=136 ctermbg=0
+    hi ScrollPositionVisualOverlap ctermfg=136 ctermbg=0
+    hi ScrollPositionChange        ctermfg=124 ctermbg=0
+    hi ScrollPositionJump          ctermfg=131 ctermbg=0
+endif
 
