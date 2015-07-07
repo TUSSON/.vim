@@ -3,6 +3,8 @@ if exists("g:loaded_scroll_position") || !has('signs')
 endif
 let g:loaded_scroll_position = 1
 
+let s:enabled = 0
+
 function scroll_position#show()
   let s:types = {}
 
@@ -14,25 +16,12 @@ function scroll_position#show()
     exec "sign define scroll_position_c text=".g:scroll_position_change." texthl=ScrollPositionchange"
     let s:types['c'] = "'."
   endif
-  let s:vtypes = copy(s:types)
 
-  " For visual range
-  let s:visual         = get(g:, 'scroll_position_visual', 1)
-  let s:visual_begin   = get(g:, 'scroll_position_visual_begin', '^')
-  let s:visual_middle  = get(g:, 'scroll_position_visual_middle', ':')
-  let s:visual_end     = get(g:, 'scroll_position_visual_end', 'v')
-  let s:visual_overlap = get(g:, 'scroll_position_visual_overlap', '<>')
   let s:marker         = get(g:, 'scroll_position_marker', '>')
 
-  let s:types['m'] = "."
+  let s:types['m'] = "w0"
   exec "sign define scroll_position_m text=".s:marker." texthl=ScrollPositionMarker"
 
-  let s:vtypes['vb'] = "."
-  let s:vtypes['ve'] = "v"
-  exec "sign define scroll_position_vb text=".s:visual_begin  ." texthl=ScrollPositionVisualBegin"
-  exec "sign define scroll_position_vm text=".s:visual_middle ." texthl=ScrollPositionVisualMiddle"
-  exec "sign define scroll_position_ve text=".s:visual_end    ." texthl=ScrollPositionVisualEnd"
-  exec "sign define scroll_position_vo text=".s:visual_overlap." texthl=ScrollPositionVisualOverlap"
   sign define scroll_position_e
 
   if !exists("g:scroll_position_exclusion")
@@ -77,29 +66,21 @@ function s:update()
     let b:scroll_position_pplaces = {}
     let b:scroll_position_pline   = 0
     let b:scroll_position_plines  = 0
-    let b:scroll_position_pvisual = -1
   endif
-
-  let lines         = line('$')
-  let cline         = line('.')
-  let visual        = (mode() ==? 'v' || mode() == '')
-  let line_changed  = cline  != b:scroll_position_pline
-  let lines_changed = lines  != b:scroll_position_plines
-  let mode_changed  = visual != b:scroll_position_pvisual
-  if !lines_changed && !line_changed && !mode_changed
-    return
-  endif
-  let b:scroll_position_pline   = cline
-  let b:scroll_position_pvisual = visual
 
   let top    = line('w0')
   let height = line('w$') - top + 1
 
-  if s:visual > 0 && visual
-    let types = s:vtypes
-  else
-    let types = s:types
+  let lines         = line('$') - height + 1
+  let cline         = line('w0')
+  let line_changed  = cline  != b:scroll_position_pline
+  let lines_changed = lines  != b:scroll_position_plines
+  if !lines_changed && !line_changed
+    return
   endif
+  let b:scroll_position_pline   = cline
+
+  let types = s:types
 
   let places  = {}
   let vrange  = []
@@ -116,34 +97,16 @@ function s:update()
     endif
   endfor
 
-  " Display visual range
-  if s:visual > 0 && visual
-    let [b, e] = sort(vrange, 's:num_sort')
-    if b < e
-      let places[b] = 'vb'
-      if s:visual > 1
-        for l in range(b + 1, e - 1)
-          let places[l] = 'vm'
-        endfor
-      endif
-      let places[e] = 've'
-    else
-      let places[b] = 'vo'
-    endif
-  endif
-
   " Remove all previous signs when total number of lines changed
   let pkeys = keys(pplaces)
-  let clearing = lines_changed || mode_changed
-  if clearing
-    for pos in pkeys
+  let clearing = lines_changed
+
+  for pos in pkeys
       call s:rem_sign(pos)
-    endfor
-  endif
+  endfor
 
   " Place signs when required
   " - Total number of lines changed (cleared)
-  " - Mode changed (cleared)
   " - New position
   " - Type changed
   for [pos, type] in items(places)
@@ -151,15 +114,6 @@ function s:update()
       call s:put_sign(type, pos)
     endif
   endfor
-
-  " Remove invalidated signs (after placing new signs!)
-  if !clearing
-    for pp in pkeys
-      if !has_key(places, pp)
-        call s:rem_sign(pp)
-      endif
-    endfor
-  endif
 
   let b:scroll_position_plines  = lines
   let b:scroll_position_pplaces = places
@@ -174,8 +128,13 @@ function scroll_position#hide()
   unlet b:scroll_position_pplaces
   unlet b:scroll_position_pline
   unlet b:scroll_position_plines
-  unlet b:scroll_position_pvisual
   let s:enabled = 0
+endfunction
+
+function scroll_position#update()
+  if s:enabled
+    call s:update()
+  endif
 endfunction
 
 function scroll_position#toggle()

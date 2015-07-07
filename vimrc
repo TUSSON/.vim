@@ -162,25 +162,21 @@ hi TabLineFill term=reverse ctermfg=0 ctermbg=0
 " Not to enable plugin by default
 let g:scroll_position_auto_enable = 0
 
-if g:scroll_position_auto_enable
-    " Default markers
-    let g:scroll_position_marker         = '▕'
-    let g:scroll_position_visual_begin   = '⇜'
-    let g:scroll_position_visual_middle  = '↭'
-    let g:scroll_position_visual_end     = '⇝'
-    let g:scroll_position_visual_overlap = '↭'
+" Default markers
+let g:scroll_position_marker         = '▕'
 
-    " Additional markers disabled by default due to slow rendering
-    "let g:scroll_position_jump = '-'
-    "let g:scroll_position_change = 'x'
+" Additional markers disabled by default due to slow rendering
+"let g:scroll_position_jump = '-'
+"let g:scroll_position_change = 'x'
 
-    hi SignColumn                  ctermfg=8   ctermbg=0
-    hi ScrollPositionMarker        ctermfg=208 ctermbg=0
-    hi ScrollPositionVisualBegin   ctermfg=136 ctermbg=0
-    hi ScrollPositionVisualMiddle  ctermfg=136 ctermbg=0
-    hi ScrollPositionVisualEnd     ctermfg=136 ctermbg=0
-    hi ScrollPositionVisualOverlap ctermfg=136 ctermbg=0
-    hi ScrollPositionChange        ctermfg=124 ctermbg=0
-    hi ScrollPositionJump          ctermfg=131 ctermbg=0
-endif
+hi SignColumn                  ctermfg=8   ctermbg=0
+hi ScrollPositionMarker        ctermfg=208 ctermbg=0
+hi ScrollPositionChange        ctermfg=124 ctermbg=0
+hi ScrollPositionJump          ctermfg=131 ctermbg=0
 
+map <silent> <leader>sp :ScrollPositionToggle<cr>
+nmap <silent> zz zz:ScrollPositionUpdate<cr>
+nmap <silent> zt zt:ScrollPositionUpdate<cr>
+nmap <silent> zb zb:ScrollPositionUpdate<cr>
+nmap <silent> <c-e> <c-e>:ScrollPositionUpdate<cr>
+nmap <silent> <c-y> <c-y>:ScrollPositionUpdate<cr>
