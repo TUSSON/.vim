@@ -180,3 +180,5 @@ nmap <silent> zt zt:ScrollPositionUpdate<cr>
 nmap <silent> zb zb:ScrollPositionUpdate<cr>
 nmap <silent> <c-e> <c-e>:ScrollPositionUpdate<cr>
 nmap <silent> <c-y> <c-y>:ScrollPositionUpdate<cr>
+
+nmap <unique> <silent> <leader>ca <Plug>MarkClear
