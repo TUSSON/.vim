@@ -113,6 +113,7 @@ let Tlist_Use_Right_Window = 1
 let Tlist_GainFocus_On_ToggleOpen = 1
 let Tlist_Close_On_Select = 1
 let Tlist_Display_Tag_Scope = 0
+let Tlist_Enable_Fold_Column = 0
 
 map <silent> tl :TlistToggle<cr>
 map <silent> tt <C-O>:tabnew #<cr>
@@ -182,3 +183,33 @@ nmap <silent> <c-e> <c-e>:ScrollPositionUpdate<cr>
 nmap <silent> <c-y> <c-y>:ScrollPositionUpdate<cr>
 
 nmap <unique> <silent> <leader>ca <Plug>MarkClear
+
+" vim-easymotion
+map s <Plug>(easymotion-prefix)
+map f <Plug>(easymotion-s)
+map sl <Plug>(easymotion-lineforward)
+map sj <Plug>(easymotion-j)
+map sk <Plug>(easymotion-k)
+map sh <Plug>(easymotion-linebackward)
+
+let g:EasyMotion_startofline = 0 " keep cursor colum when JK motion
+let g:EasyMotion_smartcase = 1
+
+" nerdcommenter
+filetype plugin on
+"<leader>cs |NERDComSexyComment|
+" Comments out the selected lines ``sexily''
+
+"<leader>c$ |NERDComEOLComment|
+" Comments the current line from the cursor to the end of line.
+
+"[count]<leader>cu |NERDComUncommentLine|
+" Uncomments the selected line(s).
+
+"Reselect visual block after indent/outdent.
+vnoremap < <gv
+vnoremap > >gv
+
+" 滚动Speed up scrolling of the viewport slightly
+nnoremap <C-e> 2<C-e>
+nnoremap <C-y> 2<C-y>

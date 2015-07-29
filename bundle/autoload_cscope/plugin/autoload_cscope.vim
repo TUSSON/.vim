@@ -109,8 +109,10 @@ augroup autoload_cscope
  au!
  au BufEnter *.[chly]  call <SID>Cycle_csdb()
  au BufEnter *.cpp     call <SID>Cycle_csdb()
+ au BufEnter *.java    call <SID>Cycle_csdb()
  au BufUnload *.[chly] call <SID>Unload_csdb()
  au BufUnload *.cpp    call <SID>Unload_csdb()
+ au BufUnload *.java   call <SID>Unload_csdb()
 augroup END 
 let &cpo = s:save_cpo
 
