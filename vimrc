@@ -68,6 +68,9 @@ let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
       \ --ignore .hg
       \ --ignore .DS_Store
       \ --ignore "**/*.pyc"
+      \ --ignore "cscope.*"
+      \ --ignore tags
+      \ --ignore .tagfiles
       \ -g ""'
 
 "spell checking
@@ -179,18 +182,18 @@ map <silent> <leader>sp :ScrollPositionToggle<cr>
 nmap <silent> zz zz:ScrollPositionUpdate<cr>
 nmap <silent> zt zt:ScrollPositionUpdate<cr>
 nmap <silent> zb zb:ScrollPositionUpdate<cr>
-nmap <silent> <c-e> <c-e>:ScrollPositionUpdate<cr>
-nmap <silent> <c-y> <c-y>:ScrollPositionUpdate<cr>
+nnoremap <silent> <c-e> <C-e><c-e>:ScrollPositionUpdate<cr>
+nnoremap <silent> <c-y> <C-y><c-y>:ScrollPositionUpdate<cr>
 
 nmap <unique> <silent> <leader>ca <Plug>MarkClear
 
 " vim-easymotion
-map s <Plug>(easymotion-prefix)
+map zs <Plug>(easymotion-prefix)
 map f <Plug>(easymotion-s)
-map sl <Plug>(easymotion-lineforward)
-map sj <Plug>(easymotion-j)
-map sk <Plug>(easymotion-k)
-map sh <Plug>(easymotion-linebackward)
+map zl <Plug>(easymotion-lineforward)
+map zj <Plug>(easymotion-j)
+map zk <Plug>(easymotion-k)
+map zh <Plug>(easymotion-linebackward)
 
 let g:EasyMotion_startofline = 0 " keep cursor colum when JK motion
 let g:EasyMotion_smartcase = 1
@@ -210,6 +213,5 @@ filetype plugin on
 vnoremap < <gv
 vnoremap > >gv
 
-" 滚动Speed up scrolling of the viewport slightly
-nnoremap <C-e> 2<C-e>
-nnoremap <C-y> 2<C-y>
+nnoremap < ^
+nnoremap > $
