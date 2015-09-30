@@ -14,6 +14,7 @@ let g:mapleader = ","
 " Fast saving
 nmap <leader>ww :w!<cr>
 nmap <leader>wq :wq<cr>
+nmap <leader>wa :wqa<cr>
 
 nmap <leader>qq :q!<cr>
 nmap <leader>qa :qa!<cr>
@@ -128,7 +129,7 @@ set foldenable
 set foldmethod=syntax
 set foldcolumn=0
 set foldminlines=3
-set foldlevel=4
+set foldlevel=6
 nnoremap <silent> <space> @=((foldclosed(line('.')) < 0) ? 'zc' :'zo')<CR>
 
 "symbol: find all references to the token under cursor
@@ -152,7 +153,7 @@ nmap <leader>g :TlistShowPrototype<CR>
 
 " Always show the status line
 set laststatus=2
-set statusline=%P\ \ %-10.(%l,%c%V%)%<%f\ %h%m%r\ -%L-
+set statusline=%P\ \ %-10.(%l,%c%V%)%<%f\ %h%m%r[%L]
 
 hi StatusLine term=reverse ctermfg=0 ctermbg=14
 hi StatusLineNC term=reverse ctermfg=0 ctermbg=10
@@ -213,5 +214,6 @@ filetype plugin on
 vnoremap < <gv
 vnoremap > >gv
 
-nnoremap < ^
+nnoremap < 0
 nnoremap > $
+nnoremap 0 ^
