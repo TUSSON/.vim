@@ -155,14 +155,15 @@ nmap <leader>g :TlistShowPrototype<CR>
 set laststatus=2
 set statusline=%P\ \ %-10.(%l,%c%V%)%<%f\ %h%m%r[%L]
 
-hi StatusLine term=reverse ctermfg=0 ctermbg=14
-hi StatusLineNC term=reverse ctermfg=0 ctermbg=10
-hi VertSplit  term=reverse ctermfg=8 ctermbg=0
-hi Visual     term=reverse ctermfg=3 ctermbg=8
+hi CursorLine cterm=bold ctermfg=NONE ctermbg=NONE
+hi StatusLine cterm=NONE ctermfg=14 ctermbg=0
+hi StatusLineNC cterm=NONE ctermfg=10 ctermbg=0
+hi VertSplit  cterm=NONE ctermfg=8 ctermbg=0
+hi Visual     cterm=reverse ctermfg=NONE ctermbg=NONE
 
-hi TabLine    term=reverse ctermfg=10 ctermbg=0
-hi TabLineSel term=reverse ctermfg=0 ctermbg=14
-hi TabLineFill term=reverse ctermfg=0 ctermbg=0
+hi TabLine    cterm=NONE ctermfg=10 ctermbg=0
+hi TabLineSel cterm=NONE ctermfg=14 ctermbg=0
+hi TabLineFill cterm=NONE ctermfg=0 ctermbg=0
 
 " Not to enable plugin by default
 let g:scroll_position_auto_enable = 0
@@ -217,3 +218,4 @@ vnoremap > >gv
 nnoremap < 0
 nnoremap > $
 nnoremap 0 ^
+
