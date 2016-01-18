@@ -47,10 +47,11 @@ map <silent> <leader>tc :tabclose<cr>
 " move in insert mode
 inoremap <c-h> <left>
 inoremap <c-l> <right>
-inoremap <c-j> <c-o>gj
-inoremap <c-k> <c-o>gk
+inoremap <c-j> <esc>o
+inoremap <c-k> <esc>ko
 inoremap <C-r>u <esc>gUiwea
 inoremap <C-r>p <c-r>"
+inoremap <C-e>  <esc>A
 
 "ctrlp: file, buffer ... finder
 let g:ctrlp_map = ',,'
@@ -137,7 +138,7 @@ nmap <C-@>s :cs find s <C-R>=expand("<cword>")<CR><CR>
 nmap <C-@>c :cs find c <C-R>=expand("<cword>")<CR><CR>
 nmap <C-@>e :cs find e <C-R>=expand("<cword>")<CR><CR>
 nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>i :cs find i <C-R>=expand("<cfile>")<CR><CR>
+nmap <C-@>i :cs find i <C-R>=expand("%:p:t")<CR><CR>
 nmap <C-@>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
 
 "if &diff
@@ -191,7 +192,7 @@ nmap <unique> <silent> <leader>ca <Plug>MarkClear
 
 " vim-easymotion
 map zs <Plug>(easymotion-prefix)
-map f <Plug>(easymotion-s)
+map f <Plug>(easymotion-s2)
 map zl <Plug>(easymotion-lineforward)
 map zj <Plug>(easymotion-j)
 map zk <Plug>(easymotion-k)
