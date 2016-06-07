@@ -1,5 +1,6 @@
 set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
 
+
 "pathogen: vim plugin manage
 call pathogen#infect()
 filetype indent on
@@ -146,10 +147,16 @@ nmap <C-@>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
     colorscheme solarized
 "endif
 
-"quick jump to current function name
-"nmap <silent> <leader>f ?<C-R>=escape(Tlist_Get_Tag_Prototype_By_Line(expand("%"), eval(line(".")-1)), '[]*')<CR><CR>b:keepjumps exe '/<C-R>=expand(Tlist_Get_Tagname_By_Line(expand("%"), eval(line(".")+2)))<CR>'<CR>:keepjumps normal n<CR>:noh<CR>:call histdel("search", -1)<CR>:let @/ = histget("search", -1)<CR>
+function! DoGoToFunctionHeader(...)
+    let Fname = a:1
+    let ret = searchdecl(Fname, 0, 1)
+    if ret != 0
+        call searchdecl(Fname, 1, 1)
+    endif
+endfunction
 
-nmap <silent> <leader>f :call searchdecl('<C-R>=expand(Tlist_Get_Tagname_By_Line(expand("%"), eval(line(".")-1)))<CR>', 0, 1)<CR>
+"quick jump to current function name
+nmap <silent> <leader>f :call DoGoToFunctionHeader('<C-R>=expand(Tlist_Get_Tagname_By_Line(expand("%"), eval(line(".")-1)))<CR>')<CR>
 nmap <leader>g :TlistShowPrototype<CR>
 
 " Always show the status line
