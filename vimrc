@@ -98,6 +98,8 @@ set expandtab
 set cursorline
 set nocompatible
 
+set backspace=indent,eol,start
+
 "auto find tags
 "set tags=tags;
 "set autochdir
