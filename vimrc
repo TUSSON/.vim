@@ -137,12 +137,21 @@ set foldlevel=6
 nnoremap <silent> <space> @=((foldclosed(line('.')) < 0) ? 'zc' :'zo')<CR>
 
 "symbol: find all references to the token under cursor
-nmap <C-@>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>i :cs find i <C-R>=expand("%:p:t")<CR><CR>
-nmap <C-@>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+nmap <leader>2s :cs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>2c :cs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>2e :cs find e <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>2d :cs find d <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>2i :cs find i <C-R>=expand("%:p:t")<CR><CR>
+nmap <leader>2f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+
+nmap <leader>ss :Ag <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>sa :AgAdd <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>sb :AgBuffer <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>ag :Ag 
+nmap <leader>aa :AgAdd 
+nmap <leader>ab :AgBuffer 
+nmap <leader>af :AgFile 
+let g:ag_highlight=1
 
 "if &diff
     set background=dark
@@ -272,3 +281,10 @@ augroup Binary
   au BufWritePost *.* if &binary | %!xxd
   au BufWritePost *.* set nomod | endif
 augroup END
+
+let g:localvimrc_ask=0
+
+map <silent> <leader>g1 :diffget 1<CR> :diffupdate<CR>
+map <silent> <leader>g2 :diffget 2<CR> :diffupdate<CR>
+map <silent> <leader>g3 :diffget 3<CR> :diffupdate<CR>
+map <silent> <leader>g4 :diffget 4<CR> :diffupdate<CR>
