@@ -144,6 +144,8 @@ nmap <leader>2d :cs find d <C-R>=expand("<cword>")<CR><CR>
 nmap <leader>2i :cs find i <C-R>=expand("%:p:t")<CR><CR>
 nmap <leader>2f :cs find f <C-R>=expand("<cfile>")<CR><CR>
 
+let g:ag_prg='ag --vimgrep --ignore "cscope.*" --ignore tags --ignore .tagfiles'
+"
 nmap <leader>ss :Ag <C-R>=expand("<cword>")<CR><CR>
 nmap <leader>sa :AgAdd <C-R>=expand("<cword>")<CR><CR>
 nmap <leader>sb :AgBuffer <C-R>=expand("<cword>")<CR><CR>
@@ -154,7 +156,7 @@ nmap <leader>af :AgFile
 let g:ag_highlight=1
 
 "if &diff
-    set background=dark
+    "set background=dark
     colorscheme solarized
 "endif
 
@@ -172,17 +174,30 @@ nmap <leader>g :TlistShowPrototype<CR>
 
 " Always show the status line
 set laststatus=2
-set statusline=%P\ \ %-10.(%l,%c%V%)%<%f\ %h%m%r[%L]
+set statusline=%P\ \ %-10.(%l,%c%V%)%f\ %h%m%r[%L]%<-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 hi CursorLine cterm=bold ctermfg=NONE ctermbg=NONE
-hi StatusLine cterm=NONE ctermfg=14 ctermbg=0
-hi StatusLineNC cterm=NONE ctermfg=10 ctermbg=0
-hi VertSplit  cterm=NONE ctermfg=8 ctermbg=0
+hi StatusLine cterm=NONE ctermfg=4 ctermbg=NONE
+hi StatusLineNC cterm=NONE ctermfg=8 ctermbg=NONE
+hi VertSplit  cterm=NONE ctermfg=8 ctermbg=NONE
 hi Visual     cterm=reverse ctermfg=NONE ctermbg=NONE
 
-hi TabLine    cterm=NONE ctermfg=10 ctermbg=0
-hi TabLineSel cterm=NONE ctermfg=14 ctermbg=0
-hi TabLineFill cterm=NONE ctermfg=0 ctermbg=0
+hi TabLine    cterm=NONE ctermfg=blue ctermbg=NONE
+hi TabLineSel cterm=NONE ctermfg=red ctermbg=NONE
+hi TabLineFill cterm=NONE ctermfg=0 ctermbg=NONE
+
+hi Pmenu cterm=NONE ctermfg=7 ctermbg=8
+hi PmenuSel cterm=NONE ctermfg=red ctermbg=8
+
+hi Folded cterm=NONE ctermfg=4 ctermbg=8
+hi FoldColumn cterm=NONE ctermfg=5 ctermbg=NONE
+hi LineNr cterm=NONE ctermfg=4 ctermbg=NONE
+hi MatchParen cterm=NONE ctermfg=3 ctermbg=5
+
+hi DiffText cterm=bold ctermfg=NONE ctermbg=4
+hi DiffAdd cterm=bold ctermfg=NONE ctermbg=4
+hi DiffChange cterm=NONE ctermfg=NONE ctermbg=NONE
+hi DiffDelete cterm=NONE ctermfg=NONE ctermbg=NONE
 
 " Not to enable plugin by default
 let g:scroll_position_auto_enable = 0
@@ -194,7 +209,7 @@ let g:scroll_position_marker         = '▕'
 "let g:scroll_position_jump = '-'
 "let g:scroll_position_change = 'x'
 
-hi SignColumn                  ctermfg=8   ctermbg=0
+hi SignColumn                  ctermfg=8   ctermbg=NONE
 hi ScrollPositionMarker        ctermfg=208 ctermbg=0
 hi ScrollPositionChange        ctermfg=124 ctermbg=0
 hi ScrollPositionJump          ctermfg=131 ctermbg=0
@@ -246,6 +261,16 @@ let g:ycm_warning_symbol = '=>'
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_collect_identifiers_from_tag_files = 1
 let g:ycm_seed_identifiers_with_syntax = 1
+au BufRead,BufNewFile *.py map <c-]> :YcmCompleter GoToDefinitionElseDeclaration<CR>
+"py << EOF
+"import os
+"import sys
+"if 'VIRTUAL_ENV' in os.environ:
+"    project_base_dir = os.environ['VIRTUAL_ENV']
+"    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+"    execfile(activate_this, dict(__file__=activate_this))
+"EOF
+
 nmap mk :YcmDiags<CR>
 
 if has("autocmd")
@@ -258,3 +283,22 @@ map <silent> <leader>g1 :diffget 1<CR> :diffupdate<CR>
 map <silent> <leader>g2 :diffget 2<CR> :diffupdate<CR>
 map <silent> <leader>g3 :diffget 3<CR> :diffupdate<CR>
 map <silent> <leader>g4 :diffget 4<CR> :diffupdate<CR>
+
+nmap <unique> <silent> <leader>e :'<,'>w !bash<CR>
+vmap <unique> <silent> <leader>e :'<,'>w !bash<CR>
+nnoremap <unique> <silent> <F9> :!clear && python3 %<cr>
+
+highlight BadWhitespace ctermbg=red guibg=darkred
+autocmd ColorScheme * highlight BadWhitespace ctermbg=red guibg=darkred
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 0
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
+
+let python_highlight_all=1
