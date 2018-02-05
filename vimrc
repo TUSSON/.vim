@@ -125,12 +125,12 @@ let Tlist_Enable_Fold_Column = 0
 
 map <silent> tl :TlistToggle<cr>
 map <silent> tt <C-O>:tabnew #<cr>
-map <silent> th <C-O>:sp #<cr>
+map <silent> ts <C-O>:sp #<cr>
 map <silent> tv <C-O>:vsp #<cr>
 
 "auto fold
 set foldenable
-set foldmethod=syntax
+set foldmethod=indent
 set foldcolumn=0
 set foldminlines=3
 set foldlevel=6
@@ -243,3 +243,20 @@ if has("autocmd")
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
 
+nnoremap <unique> <silent> <F9> :!clear && python3 %<cr>
+
+au BufRead,BufNewFile *.py map <c-]> :YcmCompleter GoToDefinitionElseDeclaration<CR>
+highlight BadWhitespace ctermbg=red guibg=darkred
+autocmd ColorScheme * highlight BadWhitespace ctermbg=red guibg=darkred
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 0
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
+
+let python_highlight_all=1
