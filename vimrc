@@ -260,3 +260,15 @@ let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 
 let python_highlight_all=1
+
+
+" for hex editing
+augroup Binary
+  au!
+  au BufReadPost *.* if &binary | %!xxd
+  au BufReadPost *.* set ft=xxd | endif
+  au BufWritePre *.* if &binary | %!xxd -r
+  au BufWritePre *.* endif
+  au BufWritePost *.* if &binary | %!xxd
+  au BufWritePost *.* set nomod | endif
+augroup END
