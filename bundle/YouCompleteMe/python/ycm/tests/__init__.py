@@ -19,36 +19,44 @@ from __future__ import unicode_literals
 from __future__ import print_function
 from __future__ import division
 from __future__ import absolute_import
-from future import standard_library
-standard_library.install_aliases()
+# Not installing aliases from python-future; it's unreliable and slow.
 from builtins import *  # noqa
 
 from ycm.tests.test_utils import MockVimModule
 MockVimModule()
 
 import functools
+import os
 import requests
 import time
+import warnings
 
 from ycm.client.base_request import BaseRequest
 from ycm.youcompleteme import YouCompleteMe
 from ycmd import user_options_store
-from ycmd.utils import WaitUntilProcessIsTerminated
+from ycmd.utils import CloseStandardStreams, WaitUntilProcessIsTerminated
 
 # The default options which are only relevant to the client, not the server and
 # thus are not part of default_options.json, but are required for a working
 # YouCompleteMe object.
 DEFAULT_CLIENT_OPTIONS = {
-  'server_log_level': 'info',
+  'log_level': 'info',
+  'keep_logfiles': 0,
   'extra_conf_vim_data': [],
   'show_diagnostics_ui': 1,
+  'echo_current_diagnostic': 1,
   'enable_diagnostic_signs': 1,
   'enable_diagnostic_highlighting': 0,
   'always_populate_location_list': 0,
 }
 
 
-def _MakeUserOptions( custom_options = {} ):
+def PathToTestFile( *args ):
+  dir_of_current_script = os.path.dirname( os.path.abspath( __file__ ) )
+  return os.path.join( dir_of_current_script, 'testdata', *args )
+
+
+def MakeUserOptions( custom_options = {} ):
   options = dict( user_options_store.DefaultOptions() )
   options.update( DEFAULT_CLIENT_OPTIONS )
   options.update( custom_options )
@@ -59,7 +67,7 @@ def _IsReady():
   return BaseRequest.GetDataFromHandler( 'ready' )
 
 
-def _WaitUntilReady( timeout = 5 ):
+def WaitUntilReady( timeout = 5 ):
   expiration = time.time() + timeout
   while True:
     try:
@@ -74,6 +82,27 @@ def _WaitUntilReady( timeout = 5 ):
       time.sleep( 0.1 )
 
 
+def StopServer( ycm ):
+  try:
+    ycm.OnVimLeave()
+    WaitUntilProcessIsTerminated( ycm._server_popen )
+    CloseStandardStreams( ycm._server_popen )
+  except Exception:
+    pass
+
+
+def setUpPackage():
+  # We treat warnings as errors in our tests because warnings raised inside Vim
+  # will interrupt user workflow with a traceback and we don't want that.
+  warnings.filterwarnings( 'error' )
+  # We ignore warnings from nose as we are not interested in them.
+  warnings.filterwarnings( 'ignore', module = 'nose' )
+
+
+def tearDownPackage():
+  warnings.resetwarnings()
+
+
 def YouCompleteMeInstance( custom_options = {} ):
   """Defines a decorator function for tests that passes a unique YouCompleteMe
   instance as a parameter. This instance is initialized with the default options
@@ -86,20 +115,20 @@ def YouCompleteMeInstance( custom_options = {} ):
 
     from ycm.tests import YouCompleteMeInstance
 
-    @YouCompleteMeInstance( { 'server_log_level': 'debug',
-                              'server_keep_logfiles': 1 } )
+    @YouCompleteMeInstance( { 'log_level': 'debug',
+                              'keep_logfiles': 1 } )
     def Debug_test( ycm ):
         ...
   """
   def Decorator( test ):
     @functools.wraps( test )
     def Wrapper( *args, **kwargs ):
-      ycm = YouCompleteMe( _MakeUserOptions( custom_options ) )
-      _WaitUntilReady()
+      ycm = YouCompleteMe( MakeUserOptions( custom_options ) )
+      WaitUntilReady()
+      ycm.CheckIfServerIsReady()
       try:
         test( ycm, *args, **kwargs )
       finally:
-        ycm.OnVimLeave()
-        WaitUntilProcessIsTerminated( ycm._server_popen )
+        StopServer( ycm )
     return Wrapper
   return Decorator

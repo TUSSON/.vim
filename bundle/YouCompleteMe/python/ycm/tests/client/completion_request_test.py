@@ -19,15 +19,14 @@ from __future__ import unicode_literals
 from __future__ import print_function
 from __future__ import division
 from __future__ import absolute_import
-from future import standard_library
-standard_library.install_aliases()
+# Not installing aliases from python-future; it's unreliable and slow.
 from builtins import *  # noqa
 
 from nose.tools import eq_
 from ycm.tests.test_utils import MockVimModule
 vim_mock = MockVimModule()
 
-from .. import completion_request
+from ycm.client import completion_request
 
 
 class ConvertCompletionResponseToVimDatas_test( object ):
@@ -40,7 +39,7 @@ class ConvertCompletionResponseToVimDatas_test( object ):
 
     try:
       eq_( expected_vim_data, vim_data )
-    except:
+    except Exception:
       print( "Expected:\n'{0}'\nwhen parsing:\n'{1}'\nBut found:\n'{2}'".format(
           expected_vim_data,
           completion_data,
