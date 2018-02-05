@@ -130,7 +130,7 @@ map <silent> tv <C-O>:vsp #<cr>
 
 "auto fold
 set foldenable
-set foldmethod=syntax
+set foldmethod=indent
 set foldcolumn=0
 set foldminlines=3
 set foldlevel=6
@@ -262,14 +262,14 @@ let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_collect_identifiers_from_tag_files = 1
 let g:ycm_seed_identifiers_with_syntax = 1
 au BufRead,BufNewFile *.py map <c-]> :YcmCompleter GoToDefinitionElseDeclaration<CR>
-"py << EOF
-"import os
-"import sys
-"if 'VIRTUAL_ENV' in os.environ:
-"    project_base_dir = os.environ['VIRTUAL_ENV']
-"    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-"    execfile(activate_this, dict(__file__=activate_this))
-"EOF
+py3 << EOF
+import os
+import sys
+if 'VIRTUAL_ENV' in os.environ:
+    project_base_dir = os.environ['VIRTUAL_ENV']
+    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+    exec(open(activate_this).read(), dict(__file__=activate_this))
+EOF
 
 nmap mk :YcmDiags<CR>
 
@@ -288,8 +288,8 @@ nmap <unique> <silent> <leader>e :'<,'>w !bash<CR>
 vmap <unique> <silent> <leader>e :'<,'>w !bash<CR>
 nnoremap <unique> <silent> <F9> :!clear && python3 %<cr>
 
-highlight BadWhitespace ctermbg=red guibg=darkred
-autocmd ColorScheme * highlight BadWhitespace ctermbg=red guibg=darkred
+highlight BadWhitespace ctermbg=5 guibg=NONE
+autocmd ColorScheme * highlight BadWhitespace ctermbg=5 guibg=NONE
 au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
 set statusline+=%#warningmsg#
@@ -302,3 +302,14 @@ let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 
 let python_highlight_all=1
+
+" for hex editing
+augroup Binary
+  au!
+  au BufReadPost *.* if &binary | %!xxd
+  au BufReadPost *.* set ft=xxd | endif
+  au BufWritePre *.* if &binary | %!xxd -r
+  au BufWritePre *.* endif
+  au BufWritePost *.* if &binary | %!xxd
+  au BufWritePost *.* set nomod | endif
+augroup END
