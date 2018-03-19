@@ -246,6 +246,17 @@ let g:ycm_warning_symbol = '=>'
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_collect_identifiers_from_tag_files = 1
 let g:ycm_seed_identifiers_with_syntax = 1
+let g:ycm_python_binary_path='/usr/bin/python3'
+au BufRead,BufNewFile *.py map <c-]> :YcmCompleter GoToDefinitionElseDeclaration<CR>
+py3 << EOF
+import os
+import sys
+if 'VIRTUAL_ENV' in os.environ:
+    project_base_dir = os.environ['VIRTUAL_ENV']
+    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+    exec(open(activate_this).read(), dict(__file__=activate_this))
+EOF
+
 nmap mk :YcmDiags<CR>
 
 if has("autocmd")
