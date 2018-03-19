@@ -261,6 +261,7 @@ let g:ycm_warning_symbol = '=>'
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_collect_identifiers_from_tag_files = 1
 let g:ycm_seed_identifiers_with_syntax = 1
+let g:ycm_python_binary_path='/Users/Tusson/bin/python'
 au BufRead,BufNewFile *.py map <c-]> :YcmCompleter GoToDefinitionElseDeclaration<CR>
 py3 << EOF
 import os
