@@ -145,17 +145,17 @@ nmap <leader>2d :cs find d <C-R>=expand("<cword>")<CR><CR>:copen<CR>
 nmap <leader>2i :cs find i <C-R>=expand("%:p:t")<CR><CR>:copen<CR>
 nmap <leader>2f :cs find f <C-R>=expand("<cfile>")<CR><CR>:copen<CR>
 
-nnoremap <expr> h (&buftype is# "quickfix" ? "<C-W><CR><C-w>K" : "")
-nnoremap <expr> H (&buftype is# "quickfix" ? "<C-W><CR><C-w>K<C-w>b" : "")
-nnoremap <expr> o (&buftype is# "quickfix" ? "<CR>" : "")
-nnoremap <expr> t (&buftype is# "quickfix" ? "<C-w><CR><C-w>T" : "")
-nnoremap <expr> T (&buftype is# "quickfix" ? "<C-w><CR><C-w>TgT<C-W><C-W>" : "")
-nnoremap <expr> v (&buftype is# "quickfix" ? "<C-w><CR><C-w>H<C-W>b<C-W>J<C-W>t" : "")
-nnoremap <expr> e (&buftype is# "quickfix" ? "<CR><C-w><C-w>:cclose<CR>" : "")
-nnoremap <expr> p (&buftype is# "quickfix" ? "<CR>:copen<CR>" : "")
-nnoremap <expr> q (&buftype is# "quickfix" ? ":cclose<CR>" : "")
-nnoremap <expr> <C-j> (&buftype is# "quickfix" ? "j<CR>:copen<CR>" : "")
-nnoremap <expr> <C-k> (&buftype is# "quickfix" ? "k<CR>:copen<CR>" : "")
+nnoremap <expr> h (&buftype is# "quickfix" ? "<C-W><CR><C-w>K" : "h")
+nnoremap <expr> H (&buftype is# "quickfix" ? "<C-W><CR><C-w>K<C-w>b" : "H")
+nnoremap <expr> o (&buftype is# "quickfix" ? "<CR>" : "o")
+nnoremap <expr> t (&buftype is# "quickfix" ? "<C-w><CR><C-w>T" : "t")
+nnoremap <expr> T (&buftype is# "quickfix" ? "<C-w><CR><C-w>TgT<C-W><C-W>" : "T")
+nnoremap <expr> v (&buftype is# "quickfix" ? "<C-w><CR><C-w>H<C-W>b<C-W>J<C-W>t" : "v")
+nnoremap <expr> e (&buftype is# "quickfix" ? "<CR><C-w><C-w>:cclose<CR>" : "e")
+nnoremap <expr> p (&buftype is# "quickfix" ? "<CR>:copen<CR>" : "p")
+nnoremap <expr> q (&buftype is# "quickfix" ? ":cclose<CR>" : "q")
+nnoremap <expr> <C-j> (&buftype is# "quickfix" ? "j<CR>:copen<CR>" : "<C-j>")
+nnoremap <expr> <C-k> (&buftype is# "quickfix" ? "k<CR>:copen<CR>" : "<C-k>")
 au BufWinEnter quickfix let w:quickfix_title = 'Keys: q=quit <cr>/e/t/h/v=enter/edit/tab/split/vsplit p/T/H/C-j/C-k=preview'
 
 nmap <leader>ss :Ag <C-R>=expand("<cword>")<CR><CR>
