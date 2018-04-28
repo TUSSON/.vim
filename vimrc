@@ -170,7 +170,7 @@ nmap <leader>af :AgFile
 let g:ag_highlight=1
 
 "if &diff
-    "set background=dark
+    set background=dark
     colorscheme solarized
 "endif
 
